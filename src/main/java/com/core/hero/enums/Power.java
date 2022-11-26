@@ -1,0 +1,16 @@
+package com.core.hero.enums;
+
+public enum Power {
+
+    TELEKINESIS,
+    INVULNERABILITY,
+    TELEPATHY,
+    CLAIRVOYANCE,
+    MULTIPLICATION,
+    MUTATION,
+    POWER_OVERRIDE,
+    TRANSFORMATION,
+    RESIZE,
+    USE_OF_AN_ELEMENT
+
+}
