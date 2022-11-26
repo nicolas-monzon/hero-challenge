@@ -1,0 +1,14 @@
+app-version: v1.0.0
+app-name: Hero Backend
+
+server:
+  port: 2001
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:hero_db
+    username: root
+    password: root
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
