@@ -1,10 +1,11 @@
 package com.core.hero.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-@Getter
+@Getter(onMethod_ = @JsonValue)
 public enum Power {
 
     TELEKINESIS("TLK"),
