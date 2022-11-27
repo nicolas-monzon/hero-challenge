@@ -2,22 +2,22 @@ package com.core.hero.entities;
 
 import com.core.hero.enums.Power;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
-@EqualsAndHashCode(of = "name")
 @Getter
 @Setter
 @Entity
 @Table(name = "hero",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"name"})
+                @UniqueConstraint(columnNames = {"hero_name"})
         })
 public class Hero {
 
@@ -33,7 +33,7 @@ public class Hero {
     @Setter(AccessLevel.PROTECTED)
     private Long id;
 
-    @Column(name = "name", length = 64, nullable = false, updatable = false)
+    @Column(name = "hero_name", length = 64, nullable = false, updatable = false)
     private String name;
 
     @Column(name = "strength", nullable = false)
@@ -53,4 +53,17 @@ public class Hero {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birthdate")
     private Date birthdate;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Hero hero = (Hero) o;
+        return id != null && Objects.equals(id, hero.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
