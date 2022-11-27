@@ -136,11 +136,6 @@
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
-            <!-- For Heroku -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
 
             <!-- ================ TEST extensions ================== -->
             <!-- **/*Test -->
@@ -163,6 +158,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Check CVEs -->
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
