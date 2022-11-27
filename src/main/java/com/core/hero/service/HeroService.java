@@ -2,7 +2,6 @@ package com.core.hero.service;
 
 import com.core.hero.dto.HeroDto;
 import com.core.hero.entities.Hero;
-import com.core.hero.errors.db.GetInstanceException;
 import com.core.hero.facade.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
