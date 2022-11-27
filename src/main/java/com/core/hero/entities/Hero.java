@@ -1,6 +1,5 @@
 package com.core.hero.entities;
 
-import com.core.hero.converter.PowerConverter;
 import com.core.hero.enums.Power;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -46,7 +45,6 @@ public class Hero {
     @Column(name = "durability", nullable = false)
     private int durability;
 
-    @Convert(converter = PowerConverter.class)
     @Column(name = "power", nullable = false)
     private Power power;
 
