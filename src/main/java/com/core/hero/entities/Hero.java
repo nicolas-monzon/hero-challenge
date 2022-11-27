@@ -1,5 +1,6 @@
 package com.core.hero.entities;
 
+import com.core.hero.converter.PowerConverter;
 import com.core.hero.enums.Power;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "hero",
+@Table(name = "HERO",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"hero_name"})
         })
@@ -45,7 +46,7 @@ public class Hero {
     @Column(name = "durability", nullable = false)
     private int durability;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = PowerConverter.class)
     @Column(name = "power", nullable = false)
     private Power power;
 

@@ -3,6 +3,7 @@ package com.core.hero.dto;
 import com.core.hero.enums.Power;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class HeroDto {
 
     private String name;
