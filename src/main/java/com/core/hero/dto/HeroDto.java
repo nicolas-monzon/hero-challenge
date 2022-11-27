@@ -14,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class HeroDto {
 
+    private Long id;
     private String name;
     private int strength;
     private int speed;

@@ -31,4 +31,13 @@ public class HeroBaseService {
         }
     }
 
+    public List<Hero> findByNameContainingIgnoreCase(String sub) {
+        try {
+            return this.heroRepository.findByNameContainingIgnoreCase(sub);
+        } catch (Exception e) {
+            throw new GetInstanceException(Hero.class.getSimpleName());
+        }
+    }
+
+
 }

@@ -13,6 +13,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class HeroResponse {
 
+    private Long id;
     private String name;
     private int strength;
     private int speed;

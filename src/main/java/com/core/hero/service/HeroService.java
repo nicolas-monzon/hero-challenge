@@ -19,7 +19,6 @@ public class HeroService {
     private final HeroBaseService heroBaseService;
     private final ModelMapperService modelMapperService;
 
-
     public List<HeroDto> findAll() {
         return this.heroBaseService.findAll().stream().map(this::map).collect(Collectors.toList());
     }
@@ -32,8 +31,20 @@ public class HeroService {
         return this.map(source.get());
     }
 
+    public List<HeroDto> findWith(@NonNull final String sub) {
+        final List<Hero> heroes = this.heroBaseService.findByNameContainingIgnoreCase(sub);
+        if(heroes.isEmpty()) {
+            throw new NotFoundException("The hero was not found");
+        }
+        return this.mapAll(heroes);
+    }
+
     private HeroDto map(Hero hero) {
         return this.modelMapperService.map(hero, HeroDto.class);
+    }
+
+    private List<HeroDto> mapAll(List<Hero> heroes) {
+        return this.modelMapperService.mapAll(heroes, HeroDto.class);
     }
 
 }
