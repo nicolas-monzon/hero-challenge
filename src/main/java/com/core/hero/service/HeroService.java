@@ -59,6 +59,10 @@ public class HeroService {
         this.heroBaseService.save(hero);
     }
 
+    public void delete(final long id) {
+        this.heroBaseService.delete(id);
+    }
+
     private HeroDto map(Hero hero) {
         return this.modelMapperService.map(hero, HeroDto.class);
     }
