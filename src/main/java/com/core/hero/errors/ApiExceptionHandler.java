@@ -36,11 +36,20 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
+            PowerNotFoundException.class
+    })
+    @ResponseBody
+    public ErrorResponse powerNotFoundRequest(final PowerNotFoundException exception) {
+        return new ErrorResponse(exception);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({
             org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class
     })
     @ResponseBody
     public ErrorResponse badRequest(final Exception ex) {
-        return new ErrorResponse(ex); // TODO: Maybe it would be more accurate to indicate the field.
+        return new ErrorResponse(ex); // Possible improvement: Maybe it would be more accurate to indicate the field.
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
