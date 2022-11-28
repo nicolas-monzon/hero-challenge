@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Setter
@@ -15,15 +19,31 @@ import java.util.Date;
 @AllArgsConstructor
 public class HeroEditRequest {
 
+    @Positive
+    @NotNull
     private Long id;
-    private String name;
-    private int strength;
-    private int speed;
-    private int durability;
 
+    @Size(max = 64)
+    @NotNull
+    private String name;
+
+    @PositiveOrZero
+    @NotNull
+    private Integer strength;
+
+    @PositiveOrZero
+    @NotNull
+    private Integer speed;
+
+    @PositiveOrZero
+    @NotNull
+    private Integer durability;
+
+    @NotNull
     private Power power;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private Date birthdate;
 
 }

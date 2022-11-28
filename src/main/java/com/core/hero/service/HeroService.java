@@ -27,9 +27,9 @@ public class HeroService {
     }
 
     @Cacheable(cacheNames = "heroes")
-    public HeroDto findById(@NonNull final Long id) {
+    public HeroDto findById(@NonNull final long id) {
         final Optional<Hero> source = this.heroBaseService.findById(id);
-        if(source.isEmpty()) {
+        if (source.isEmpty()) {
             throw new NotFoundException("The hero was not found");
         }
         log.info(String.format("The hero %s was saved in the cache", source.get().getName()));
@@ -38,10 +38,25 @@ public class HeroService {
 
     public List<HeroDto> findWith(@NonNull final String sub) {
         final List<Hero> heroes = this.heroBaseService.findByNameContainingIgnoreCase(sub);
-        if(heroes.isEmpty()) {
+        if (heroes.isEmpty()) {
             throw new NotFoundException("The hero was not found");
         }
         return this.mapAll(heroes);
+    }
+
+    public void update(@NonNull final HeroDto heroDto) {
+        final Optional<Hero> source = this.heroBaseService.findById(heroDto.getId());
+        if (source.isEmpty()) {
+            throw new NotFoundException("The hero was not found");
+        }
+        Hero hero = source.get();
+        hero.setName(heroDto.getName());
+        hero.setStrength(heroDto.getStrength());
+        hero.setSpeed(heroDto.getSpeed());
+        hero.setDurability(heroDto.getDurability());
+        hero.setPower(heroDto.getPower());
+        hero.setBirthdate(heroDto.getBirthdate());
+        this.heroBaseService.save(hero);
     }
 
     private HeroDto map(Hero hero) {
