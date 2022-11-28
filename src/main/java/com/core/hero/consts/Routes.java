@@ -6,5 +6,6 @@ public class Routes {
     public static final String HERO_GET_ALL = "/all";
     public static final String HERO_GET_BY_ID = "/search";
     public static final String HERO_UPDATE = "/hero";
+    public static final String HERO_DELETE = "/hero/{id}";
 
 }

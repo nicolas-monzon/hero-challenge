@@ -1,6 +1,7 @@
 package com.core.hero.service;
 
 import com.core.hero.entities.Hero;
+import com.core.hero.errors.db.DeleteInstanceException;
 import com.core.hero.errors.db.GetInstanceException;
 import com.core.hero.errors.db.SaveInstanceException;
 import com.core.hero.repositories.HeroRepository;
@@ -45,6 +46,14 @@ public class HeroBaseService {
             this.heroRepository.save(hero);
         } catch (Exception e) {
             throw new SaveInstanceException(Hero.class.getSimpleName());
+        }
+    }
+
+    public void delete(long id) {
+        try {
+            this.heroRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new DeleteInstanceException(Hero.class.getSimpleName());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.core.hero.controller;
 
 import com.core.hero.consts.Routes;
+import com.core.hero.controller.payload.Empty;
 import com.core.hero.controller.payload.HeroEditRequest;
 import com.core.hero.controller.payload.HeroResponse;
 import com.core.hero.dto.HeroDto;
@@ -9,11 +10,14 @@ import com.core.hero.facade.ModelMapperService;
 import com.core.hero.service.HeroService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +70,12 @@ public class HeroController {
                 request.getBirthdate());
         this.heroService.update(heroDto);
         return ResponseEntity.ok(this.modelMapperService.map(request, HeroResponse.class));
+    }
+
+    @DeleteMapping(Routes.HERO_DELETE)
+    public ResponseEntity<?> delete(@PathVariable @Valid @NotNull Long id) {
+        this.heroService.delete(id);
+        return ResponseEntity.ok(new Empty());
     }
 
 }

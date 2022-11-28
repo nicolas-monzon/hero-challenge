@@ -9,4 +9,6 @@ public interface HeroRepository extends JpaRepository<Hero, Long> {
 
     List<Hero> findByNameContainingIgnoreCase(String sub);
 
+    void deleteById(long id);
+
 }
