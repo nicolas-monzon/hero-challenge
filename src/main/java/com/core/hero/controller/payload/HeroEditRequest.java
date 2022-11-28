@@ -1,5 +1,6 @@
 package com.core.hero.controller.payload;
 
+import com.core.hero.controller.validation.PowerValidator;
 import com.core.hero.enums.Power;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -40,7 +41,8 @@ public class HeroEditRequest {
     private Integer durability;
 
     @NotNull
-    private Power power;
+    @PowerValidator
+    private String power;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NotNull

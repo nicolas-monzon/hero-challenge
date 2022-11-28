@@ -5,18 +5,17 @@ import com.core.hero.controller.payload.Empty;
 import com.core.hero.controller.payload.HeroEditRequest;
 import com.core.hero.controller.payload.HeroResponse;
 import com.core.hero.dto.HeroDto;
+import com.core.hero.enums.Power;
 import com.core.hero.errors.http.NotFoundException;
 import com.core.hero.facade.ModelMapperService;
 import com.core.hero.service.HeroService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
@@ -66,7 +65,7 @@ public class HeroController {
                 request.getStrength(),
                 request.getSpeed(),
                 request.getDurability(),
-                request.getPower(),
+                Power.getByName(request.getPower()),
                 request.getBirthdate());
         this.heroService.update(heroDto);
         return ResponseEntity.ok(this.modelMapperService.map(request, HeroResponse.class));
