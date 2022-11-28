@@ -10,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -31,9 +30,9 @@ public class Hero {
     )
     @Column(name = "id", updatable = false, nullable = false)
     @Setter(AccessLevel.PROTECTED)
-    private Long id;
+    private long id;
 
-    @Column(name = "hero_name", length = 64, nullable = false, updatable = false)
+    @Column(name = "hero_name", length = 64, nullable = false)
     private String name;
 
     @Column(name = "strength", nullable = false)
@@ -50,7 +49,7 @@ public class Hero {
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "birthdate")
+    @Column(name = "birthdate", nullable = false)
     private Date birthdate;
 
     @Override
@@ -58,7 +57,7 @@ public class Hero {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Hero hero = (Hero) o;
-        return id != null && Objects.equals(id, hero.id);
+        return id == hero.id;
     }
 
     @Override

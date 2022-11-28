@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
-            Routes.HERO_BASE + Routes.HERO_GET_ALL
+            Routes.HERO_BASE + "/**"
     };
 
     @Bean

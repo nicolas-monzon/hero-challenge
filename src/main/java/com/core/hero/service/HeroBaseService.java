@@ -2,6 +2,7 @@ package com.core.hero.service;
 
 import com.core.hero.entities.Hero;
 import com.core.hero.errors.db.GetInstanceException;
+import com.core.hero.errors.db.SaveInstanceException;
 import com.core.hero.repositories.HeroRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class HeroBaseService {
         }
     }
 
-    public Optional<Hero> findById(Long id) {
+    public Optional<Hero> findById(long id) {
         try {
             return this.heroRepository.findById(id);
         } catch (Exception e) {
@@ -39,5 +40,12 @@ public class HeroBaseService {
         }
     }
 
+    public void save(Hero hero) {
+        try {
+            this.heroRepository.save(hero);
+        } catch (Exception e) {
+            throw new SaveInstanceException(Hero.class.getSimpleName());
+        }
+    }
 
 }
