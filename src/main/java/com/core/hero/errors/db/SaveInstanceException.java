@@ -18,9 +18,4 @@ public class SaveInstanceException extends CustomException {
         return s;
     }
 
-    @Override
-    protected boolean mustLogException() {
-        return true;
-    }
-
 }

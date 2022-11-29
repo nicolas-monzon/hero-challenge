@@ -9,9 +9,4 @@ public class PowerNotFoundException extends CustomException {
         super(DESCRIPTION);
     }
 
-    @Override
-    protected boolean mustLogException() {
-        return true;
-    }
-
 }

@@ -12,9 +12,4 @@ public class NotFoundException extends CustomException {
         super(DESCRIPTION, message);
     }
 
-    @Override
-    protected boolean mustLogException() {
-        return true;
-    }
-
 }

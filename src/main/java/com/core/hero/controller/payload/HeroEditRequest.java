@@ -1,7 +1,6 @@
 package com.core.hero.controller.payload;
 
 import com.core.hero.controller.validation.PowerValidator;
-import com.core.hero.enums.Power;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
