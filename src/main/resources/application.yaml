@@ -3,6 +3,13 @@ app-name: Hero Backend
 
 server:
   port: 2001
+  compression: # GZIP
+    min-response-size: 1024
+    enabled: true
+    mime-types: application/json
+  servlet:
+    encoding:
+      charset: UTF-8
 
 spring:
   datasource:
@@ -20,3 +27,13 @@ spring:
     console:
       enabled: true
 
+# Swagger
+springdoc:
+  pre-loading-enabled: true # False in production
+  swagger-ui:
+    operationsSorter: alpha
+    enabled: true # False in production
+    path: /swagger-ui.html
+  override-with-generic-response: false
+  api-docs:
+    enabled: true # False in production

@@ -18,9 +18,4 @@ public class GetInstanceException extends CustomException {
         return s;
     }
 
-    @Override
-    protected boolean mustLogException() {
-        return true;
-    }
-
 }
