@@ -41,8 +41,8 @@ public class HeroController {
     @Operation(summary = "Get all heroes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the heroes",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = HeroResponse.class)) })})
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = HeroResponse.class))})})
     @GetMapping(Routes.HERO_GET_ALL)
     public ResponseEntity<List<HeroResponse>> all() {
         List<HeroResponse> heroes = this.modelMapperService.mapAll(this.heroService.findAll(), HeroResponse.class);
@@ -52,10 +52,10 @@ public class HeroController {
     @Operation(summary = "Search hero with pattern or search by id or both")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the heroes",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = HeroResponse.class)) }),
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = HeroResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid parameter supplied", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Hero not found", content = @Content) })
+            @ApiResponse(responseCode = "404", description = "Hero not found", content = @Content)})
     @GetMapping(Routes.HERO_GET)
     public ResponseEntity<?> search(
             @RequestParam @Valid Optional<@Positive Long> id,
@@ -79,10 +79,10 @@ public class HeroController {
     @Operation(summary = "Update some hero")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Update the hero",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = HeroResponse.class)) }),
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = HeroResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid field supplied", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Hero not found", content = @Content) })
+            @ApiResponse(responseCode = "404", description = "Hero not found", content = @Content)})
     @PutMapping(Routes.HERO_UPDATE)
     public ResponseEntity<HeroResponse> update(@Valid @RequestBody HeroEditRequest request) {
         final HeroDto heroDto = new HeroDto(request.getId(),
@@ -99,10 +99,10 @@ public class HeroController {
     @Operation(summary = "Delete some hero")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Delete the hero",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = HeroResponse.class)) }),
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = HeroResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Hero not found", content = @Content) })
+            @ApiResponse(responseCode = "404", description = "Hero not found", content = @Content)})
     @DeleteMapping(Routes.HERO_DELETE)
     public ResponseEntity<?> delete(@PathVariable @Valid @NotNull Long id) {
         this.heroService.delete(id);

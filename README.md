@@ -15,6 +15,7 @@ El proyecto cuenta con:
 - Uso de ```Optional```
 - El proyecto esta dockerizado sin usar una imagen de un SO completo
 - Metología GitFlow
+- Annotation personalizada (Ejemplo con ```PowerValidator```)
 
 ## Requisitos
 
@@ -30,4 +31,15 @@ Java JDK 11.
 
 ## Documentación
 
-El proyecto cuenta con algunos métodos descriptos por JavaDoc, pero también posee Swagger. Para consultarlo, vaya a ```http://localhost:2001/swagger-ui/index.html```.
+El proyecto cuenta con algunos métodos descriptos por JavaDoc, pero también posee Swagger. Para consultarlo, 
+vaya a ```http://localhost:2001/swagger-ui/index.html```.
+
+## Trabajo a futuro
+
+- La aplicación puede migrar de H2 a Redis.
+- Tampoco fue aplicado TDD en la creación de los tests.
+- Los tests de repositorios serían una buena mejora.
+- Analizar la opción de ```ObjectMapper``` en lugar de ```ModelMapper```.
+- El coverage puede aumentar, haciendo tests genéricos de la capa de Facade.
+- Es posible que el método de borrado de heroes pueda borrar de a varios.
+- El cache configurado es el tipo más básico de caché, y algunos métodos también podrían ser cacheados.
