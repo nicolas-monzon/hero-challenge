@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "815ab9a3-b32a-40c8-93da-3a16e1c7ba29",
+		"name": "Hero Challenge collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all heroes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2001/api/v1/heroes/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2001",
+					"path": [
+						"api",
+						"v1",
+						"heroes",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get hero by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2001/api/v1/heroes/search?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2001",
+					"path": [
+						"api",
+						"v1",
+						"heroes",
+						"search"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit hero",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Hombre araña\",\r\n    \"strength\": 100,\r\n    \"speed\": 100,\r\n    \"durability\": 100,\r\n    \"power\": \"TELEKINESIS\",\r\n    \"birthdate\": \"1997-27-02\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:2001/api/v1/heroes/hero",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2001",
+					"path": [
+						"api",
+						"v1",
+						"heroes",
+						"hero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete hero",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:2001/api/v1/heroes/hero/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "2001",
+					"path": [
+						"api",
+						"v1",
+						"heroes",
+						"hero",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
