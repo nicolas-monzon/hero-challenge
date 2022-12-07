@@ -14,7 +14,7 @@ import java.util.Locale;
 public enum Power {
 
     TELEKINESIS("TLK"),
-    INVULNERABILITY("IMV"),
+    INVULNERABILITY("INV"),
     TELEPATHY("TLP"),
     CLAIRVOYANCE("CLR"),
     MULTIPLICATION("MTP"),
