@@ -8,6 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 public class PowerValidatorLogic implements ConstraintValidator<PowerValidator, String> {
     @Override
     public boolean isValid(String power, ConstraintValidatorContext context) {
-        return Power.existsName(power);
+        return power == null || Power.existsName(power);
     }
 }
