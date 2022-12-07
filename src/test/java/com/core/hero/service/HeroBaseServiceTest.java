@@ -2,7 +2,9 @@ package com.core.hero.service;
 
 import com.core.hero.entities.Hero;
 import com.core.hero.enums.Power;
+import com.core.hero.errors.db.DeleteInstanceException;
 import com.core.hero.errors.db.GetInstanceException;
+import com.core.hero.errors.db.SaveInstanceException;
 import com.core.hero.repositories.HeroRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 public class HeroBaseServiceTest {
@@ -59,7 +62,7 @@ public class HeroBaseServiceTest {
     @DisplayName("Should be get all heroes with error")
     @Test
     public void shouldBeGetAllHeroesWithError() {
-        when(heroRepository.findAll()).thenThrow(new GetInstanceException(Hero.class.getSimpleName()));
+        when(heroRepository.findAll()).thenThrow(new RuntimeException());
 
         assertThrows(GetInstanceException.class, () -> heroBaseService.findAll());
     }
@@ -95,9 +98,88 @@ public class HeroBaseServiceTest {
     @DisplayName("Should be get hero by id with error")
     @Test
     public void shouldBeGetHeroByIdWithError() {
-        when(heroRepository.findById(eq(2L))).thenThrow(new GetInstanceException(Hero.class.getSimpleName()));
+        when(heroRepository.findById(eq(2L))).thenThrow(new RuntimeException());
 
         assertThrows(GetInstanceException.class, () -> heroBaseService.findById(2L));
+    }
+
+    @DisplayName("Should be get hero by substring successfully")
+    @Test
+    public void shouldBeGetHeroBySubstring() {
+        Date date = new Date();
+        List<Hero> mockHero = List.of(this.getMockHero(date));
+        when(heroRepository.findByNameContainingIgnoreCase(eq("man"))).thenReturn(mockHero);
+
+        List<Hero> heroes = heroBaseService.findByNameContainingIgnoreCase("man");
+        assertNotNull(heroes);
+        assertEquals(1, heroes.size());
+
+        Hero expected = this.getMockHero(date);
+        Hero actual = heroes.get(0);
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getSpeed(), actual.getSpeed());
+        assertEquals(expected.getStrength(), actual.getStrength());
+        assertEquals(expected.getDurability(), actual.getDurability());
+        assertEquals(expected.getBirthdate(), actual.getBirthdate());
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getPower(), actual.getPower());
+
+        when(heroRepository.findByNameContainingIgnoreCase(eq("man"))).thenReturn(List.of());
+
+        heroes = heroBaseService.findByNameContainingIgnoreCase("man");
+        assertNotNull(heroes);
+        assertTrue(heroes.isEmpty());
+    }
+
+    @DisplayName("Should be get hero by substring with error")
+    @Test
+    public void shouldBeGetHeroBySubstringWithError() {
+        when(heroRepository.findByNameContainingIgnoreCase(eq("man")))
+                .thenThrow(new RuntimeException());
+
+        assertThrows(GetInstanceException.class, () -> heroBaseService.findByNameContainingIgnoreCase("man"));
+    }
+
+    @DisplayName("Should be save hero successfully")
+    @Test
+    public void shouldBeSaveHero() {
+        Hero mockHero = this.getMockAllHeroes().get(0);
+
+        this.heroBaseService.save(mockHero);
+
+        verify(this.heroRepository, times(1)).save(mockHero);
+    }
+
+    @DisplayName("Should be save hero with error")
+    @Test
+    public void shouldBeSaveHeroWithError() {
+        Hero mockHero = this.getMockAllHeroes().get(0);
+        when(this.heroRepository.save(eq(mockHero))).thenThrow(new RuntimeException());
+
+        assertThrows(SaveInstanceException.class, () -> this.heroBaseService.save(new Hero(1,
+                "Spiderman",
+                101,
+                102,
+                104,
+                Power.MUTATION,
+                new Date())
+        ));
+    }
+
+    @DisplayName("Should be execute delete method for some hero successfully")
+    @Test
+    public void shouldBeDeleteHero() {
+        this.heroBaseService.delete(1);
+
+        verify(this.heroRepository, times(1)).deleteById(1);
+    }
+
+    @DisplayName("Should be execute delete method for some hero with error")
+    @Test
+    public void shouldBeDeleteHeroWithError() {
+        doThrow(new RuntimeException()).when(this.heroRepository).deleteById(eq(1));
+
+        assertThrows(DeleteInstanceException.class, () -> this.heroBaseService.delete(1));
     }
 
     private Hero getMockHero(final Date date) {
