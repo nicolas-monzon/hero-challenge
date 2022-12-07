@@ -1,6 +1,7 @@
 package com.core.hero.controller;
 
 import com.core.hero.consts.Routes;
+import com.core.hero.controller.payload.HeroEditRequest;
 import com.core.hero.controller.payload.HeroResponse;
 import com.core.hero.enums.Power;
 import com.core.hero.repositories.HeroRepository;
@@ -29,7 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
@@ -98,6 +99,37 @@ public class HeroControllerIT {
         assertTrue(result.contains("error"));
     }
 
+    @Test
+    @DisplayName("Test - " + Routes.HERO_BASE + Routes.HERO_UPDATE + " - 200")
+    public void shouldUpdateHero() throws ParseException {
+        final String URI = Routes.HERO_BASE + Routes.HERO_UPDATE;
+
+        final String result = expectPutPerform(URI, HttpStatus.OK.value(), new HeroEditRequest(3L,
+                "Triclope",
+                1250,
+                800,
+                900,
+                Power.TRANSFORMATION.name(),
+                new Date()
+        ));
+
+        assertNotNull(result);
+        assertTrue(result.contains("Triclope"));
+        assertTrue(result.toUpperCase(Locale.ROOT).contains(Power.TRANSFORMATION.name().toUpperCase(Locale.ROOT)));
+
+        // revert operation
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date birthdate = format.parse("12/08/2001");
+        expectPutPerform(URI, HttpStatus.OK.value(), new HeroEditRequest(3L,
+                "Ciclope",
+                1250,
+                800,
+                900,
+                Power.MUTATION.name(),
+                birthdate
+        ));
+    }
+
     private String expectGetPerform(final String URI,
                                     final int status) {
         MvcResult mvcResult;
@@ -110,6 +142,38 @@ public class HeroControllerIT {
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(matcher)
                     .andReturn();
+        } catch (Exception exception) {
+            return null;
+        }
+        String result;
+        try {
+            result = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+        return result;
+    }
+
+    public String expectPutPerform(final String URI,
+                                    final int status,
+                                    final Object request) {
+        MvcResult mvcResult;
+        try {
+            final ResultMatcher matcher = getMatcher(status);
+            if (matcher == null) {
+                fail();
+            }
+            mvcResult = (request == null) ?
+                    mvc.perform(put(URI)
+                                    .contentType(MediaType.APPLICATION_JSON))
+                            .andExpect(matcher)
+                            .andReturn()
+                    :
+                    mvc.perform(put(URI)
+                                    .content(this.toJsonString(request))
+                                    .contentType(MediaType.APPLICATION_JSON))
+                            .andExpect(matcher)
+                            .andReturn();
         } catch (Exception exception) {
             return null;
         }

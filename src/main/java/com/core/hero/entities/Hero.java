@@ -29,7 +29,6 @@ public class Hero {
             strategy = "native"
     )
     @Column(name = "id", updatable = false, nullable = false)
-    @Setter(AccessLevel.PROTECTED)
     private long id;
 
     @Column(name = "hero_name", length = 64, nullable = false)
