@@ -24,7 +24,7 @@
         <modelmapper.version>3.1.0</modelmapper.version>
         <!-- Download a newer dependency than 1.6.12 because this contains a critical bug -->
         <!-- https://github.com/OpenAPITools/openapi-generator/issues/11818 -->
-        <spring-doc.version>1.6.13</spring-doc.version> <!-- <spring-doc.version>1.6.1</spring-doc.version> TODO -->
+        <spring-doc.version>1.6.13</spring-doc.version>
         <maven-model.version>3.8.6</maven-model.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     </properties>
@@ -119,6 +119,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Processors -->
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
         <!-- ================ TEST ================== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -190,6 +197,13 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Processors -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <proc>none</proc>
+                </configuration>
             </plugin>
         </plugins>
     </build>

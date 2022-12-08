@@ -1,5 +1,6 @@
 package com.core.hero.controller;
 
+import com.core.hero.annotations.Timed;
 import com.core.hero.consts.Routes;
 import com.core.hero.controller.payload.Empty;
 import com.core.hero.controller.payload.HeroEditRequest;
@@ -38,6 +39,7 @@ public class HeroController {
     private final ModelMapperService modelMapperService;
     private final HeroService heroService;
 
+    @Timed
     @Operation(summary = "Get all heroes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the heroes",
@@ -49,6 +51,7 @@ public class HeroController {
         return ResponseEntity.ok(heroes);
     }
 
+    @Timed
     @Operation(summary = "Search hero with pattern or search by id or both")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the heroes",
@@ -76,6 +79,7 @@ public class HeroController {
         return ResponseEntity.ok(heroes);
     }
 
+    @Timed
     @Operation(summary = "Update some hero")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Update the hero",
@@ -96,6 +100,7 @@ public class HeroController {
         return ResponseEntity.ok(this.modelMapperService.map(request, HeroResponse.class));
     }
 
+    @Timed
     @Operation(summary = "Delete some hero")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Delete the hero",

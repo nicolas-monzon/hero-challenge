@@ -22,10 +22,13 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      ddl-auto: none
+      ddl-auto: validate
   h2:
     console:
       enabled: true
+  sql:
+    init:
+      mode: always
 
 # Swagger
 springdoc:

@@ -27,7 +27,7 @@ public class HeroService {
     }
 
     @Cacheable(cacheNames = "heroes")
-    public HeroDto findById(@NonNull final long id) {
+    public HeroDto findById(final long id) {
         final Optional<Hero> source = this.heroBaseService.findById(id);
         if (source.isEmpty()) {
             throw new NotFoundException("The hero was not found");
