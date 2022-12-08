@@ -121,7 +121,7 @@ public class HeroControllerIT {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Date birthdate = format.parse("12/08/2001");
         expectPutPerform(URI, HttpStatus.OK.value(), new HeroEditRequest(3L,
-                "Ciclope",
+                "Cíclope",
                 1250,
                 800,
                 900,

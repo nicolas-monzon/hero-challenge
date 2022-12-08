@@ -40,6 +40,6 @@ vaya a ```http://localhost:2001/swagger-ui/index.html```.
 - Tampoco fue aplicado TDD en la creación de los tests.
 - Los tests de repositorios serían una buena mejora.
 - Analizar la opción de ```ObjectMapper``` en lugar de ```ModelMapper```.
-- El coverage puede aumentar, haciendo tests genéricos de la capa de Facade.
+- Se pueden agregar tests genéricos de la capa de Facade.
 - Es posible que el método de borrado de heroes pueda borrar de a varios.
-- El cache configurado es el tipo más básico de caché, y algunos métodos también podrían ser cacheados.
+- El caché configurado es el tipo más básico de caché, y podría usarse alguna versión mejorada
