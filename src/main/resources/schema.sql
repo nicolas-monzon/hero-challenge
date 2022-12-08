@@ -1,6 +1,6 @@
 create table hero
 (
-    id         INTEGER primary key,
+    id         BIGINT primary key,
     hero_name  varchar(64)   not null,
     strength   int default 0 not null,
     speed      int default 0 not null,
