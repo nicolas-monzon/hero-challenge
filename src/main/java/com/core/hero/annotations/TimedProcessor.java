@@ -14,8 +14,7 @@ public class TimedProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        // This is not a processor for static classes, but for marking beans, the hero controller is a bean and
-        // needs another treatment
+        // This is not a processor for beans, but for marking beans, the hero controller needs another treatment
         return true;
     }
 
