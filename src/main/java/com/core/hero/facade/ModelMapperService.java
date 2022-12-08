@@ -5,14 +5,15 @@ import org.modelmapper.ConfigurationException;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 public class ModelMapperService implements IModelMapperService {
 
     private static final String ERROR_MESSAGE = "Could not map an entity";
@@ -25,6 +26,7 @@ public class ModelMapperService implements IModelMapperService {
         this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
 
+    @Cacheable(cacheNames = "map")
     public <S, D> D map(final S source, final D destination) {
         try {
             this.modelMapper.map(source, destination);
@@ -34,6 +36,7 @@ public class ModelMapperService implements IModelMapperService {
         }
     }
 
+    @Cacheable(cacheNames = "map2")
     public <D, T> D map(final T entity, Class<D> outClass) {
         try {
             return this.modelMapper.map(entity, outClass);
@@ -42,6 +45,7 @@ public class ModelMapperService implements IModelMapperService {
         }
     }
 
+    @Cacheable(cacheNames = "map3")
     public <D, T> List<D> mapAll(final Collection<T> entityList, Class<D> outClass) {
         try {
             return entityList.stream()
