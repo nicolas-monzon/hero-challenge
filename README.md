@@ -29,6 +29,9 @@ Java JDK 11.
 4. Para levantar la imagen ```docker run --name java-app -p 8081:8080 hero-app:latest```.
 5. Para verificar que esté corrientdo ```docker ps -a```,
 
+Si el proyecto no compila, por ejemplo, por modificar el código, borrar manualmente el archivo
+```javax.annotation.processing.Processor```.
+
 ## Documentación
 
 El proyecto cuenta con algunos métodos descriptos por JavaDoc, pero también posee Swagger. Para consultarlo, 
