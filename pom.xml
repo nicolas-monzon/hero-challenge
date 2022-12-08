@@ -119,6 +119,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Processors -->
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
         <!-- ================ TEST ================== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -190,6 +197,13 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Processors -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <proc>none</proc>
+                </configuration>
             </plugin>
         </plugins>
     </build>
