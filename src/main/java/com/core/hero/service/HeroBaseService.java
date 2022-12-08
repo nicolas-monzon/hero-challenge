@@ -5,6 +5,7 @@ import com.core.hero.errors.db.DeleteInstanceException;
 import com.core.hero.errors.db.GetInstanceException;
 import com.core.hero.errors.db.SaveInstanceException;
 import com.core.hero.repositories.HeroRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class HeroBaseService {
         }
     }
 
-    public List<Hero> findByNameContainingIgnoreCase(String sub) {
+    public List<Hero> findByNameContainingIgnoreCase(@NonNull final String sub) {
         try {
             return this.heroRepository.findByNameContainingIgnoreCase(sub);
         } catch (Exception e) {
@@ -41,7 +42,7 @@ public class HeroBaseService {
         }
     }
 
-    public void save(Hero hero) {
+    public void save(@NonNull final Hero hero) {
         try {
             this.heroRepository.save(hero);
         } catch (Exception e) {

@@ -47,7 +47,8 @@ public class HeroController {
                             schema = @Schema(implementation = HeroResponse.class))})})
     @GetMapping(Routes.HERO_GET_ALL)
     public ResponseEntity<List<HeroResponse>> all() {
-        List<HeroResponse> heroes = this.modelMapperService.mapAll(this.heroService.findAll(), HeroResponse.class);
+        final List<HeroResponse> heroes =
+                this.modelMapperService.mapAll(this.heroService.findAll(), HeroResponse.class);
         return ResponseEntity.ok(heroes);
     }
 
@@ -72,7 +73,7 @@ public class HeroController {
             return ResponseEntity.ok(this.modelMapperService.map(heroDto, HeroResponse.class));
         }
 
-        List<HeroResponse> heroes = contains.isPresent() ?
+        final List<HeroResponse> heroes = contains.isPresent() ?
                 this.modelMapperService.mapAll(this.heroService.findWith(contains.get()), HeroResponse.class)
                 :
                 this.modelMapperService.mapAll(this.heroService.findAll(), HeroResponse.class);
