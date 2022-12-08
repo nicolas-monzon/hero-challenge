@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Slf4j
 public class TimedAspectTest {
@@ -19,12 +20,28 @@ public class TimedAspectTest {
         factory.addAspect(aspect);
         A proxy = factory.getProxy();
         assertDoesNotThrow(proxy::doSomething);
+        assertDoesNotThrow(() -> proxy.exampleMethod(15));
+        assertThrows(NullPointerException.class, proxy::throwableMethod);
     }
 
     static class A {
         @Timed
         public void doSomething() {
             log.info("This is a test method");
+        }
+
+        @Timed
+        public int exampleMethod(int total) throws InterruptedException {
+            Thread.sleep(1);
+            if(total <= 1) {
+                return 1;
+            }
+            return total - 1;
+        }
+
+        @Timed
+        public void throwableMethod() {
+            throw new NullPointerException();
         }
     }
 
