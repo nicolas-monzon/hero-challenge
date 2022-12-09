@@ -43,6 +43,7 @@ vaya a ```http://localhost:2001/swagger-ui/index.html```.
 - Tampoco fue aplicado TDD en la creación de los tests.
 - Los tests de repositorios serían una buena mejora.
 - Analizar la opción de ```ObjectMapper``` en lugar de ```ModelMapper```.
+- Se pueden agregar tests para los casos de los @NonNull de lombok
 - Se pueden agregar tests genéricos de la capa de Facade.
 - Es posible que el método de borrado de heroes pueda borrar de a varios.
 - El caché configurado es el tipo más básico de caché, y podría usarse alguna versión mejorada
