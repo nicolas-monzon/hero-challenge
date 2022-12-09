@@ -14,11 +14,11 @@ public class TimedAspectTest {
     @Test
     @DisplayName("Should execute some method with the timed annotation")
     public void shouldExecuteTimedAnnotation() {
-        A target = new A();
+        final var target = new A();
         AspectJProxyFactory factory = new AspectJProxyFactory(target);
         TimedAspect aspect = new TimedAspect();
         factory.addAspect(aspect);
-        A proxy = factory.getProxy();
+        final A proxy = factory.getProxy();
         assertDoesNotThrow(proxy::doSomething);
         assertDoesNotThrow(() -> proxy.exampleMethod(15));
         assertThrows(NullPointerException.class, proxy::throwableMethod);

@@ -18,21 +18,21 @@ public class PowerTest {
 
     @TestFactory
     public Collection<DynamicTest> shouldCheckValues() {
-        String[] INVALID_VALUES = { "cloning", "laser_beam", "invisibility", "to_fly" };
+        final String[] INVALID_VALUES = { "cloning", "laser_beam", "invisibility", "to_fly" };
 
-        List<DynamicTest> list = Arrays.stream(Power.values()).map(Power::name).map(power -> DynamicTest.dynamicTest(
+        var list = Arrays.stream(Power.values()).map(Power::name).map(power -> DynamicTest.dynamicTest(
                 "Should exists: " + power,
                 () -> {
                     Power actual = Power.getByName(power);
                     assertNotNull(actual);
                 })).collect(Collectors.toList());
 
-        List<DynamicTest> list2 = Arrays.stream(INVALID_VALUES).map(power -> DynamicTest.dynamicTest(
+        var list2 = Arrays.stream(INVALID_VALUES).map(power -> DynamicTest.dynamicTest(
                 "Should not exists: " + power,
                 () -> assertThrows(PowerNotFoundException.class, () -> Power.getByName(power))))
                 .collect(Collectors.toList());
 
-        Collection<DynamicTest> collection = new ArrayList<>();
+        final Collection<DynamicTest> collection = new ArrayList<>();
 
         collection.addAll(list);
         collection.addAll(list2);

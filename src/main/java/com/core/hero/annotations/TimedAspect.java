@@ -14,9 +14,9 @@ public class TimedAspect {
     @Around("@annotation(com.core.hero.annotations.Timed)")
     public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
 
-        final long start = System.currentTimeMillis();
-        final Object proceed = joinPoint.proceed();
-        final long total = System.currentTimeMillis() - start;
+        final var start = System.currentTimeMillis();
+        final var proceed = joinPoint.proceed();
+        final var total = System.currentTimeMillis() - start;
 
         log.info("Method {} in {}, had a duration of {}ms",
                 joinPoint.getSignature().getName(),

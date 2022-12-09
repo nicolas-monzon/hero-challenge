@@ -35,15 +35,15 @@ public class HeroBaseServiceTest {
     @DisplayName("Should be get all heroes successfully")
     @Test
     public void shouldBeGetAllHeroes() {
-        List<Hero> mockAllHeroes = this.getMockAllHeroes();
+        final var mockAllHeroes = this.getMockAllHeroes();
         when(heroRepository.findAll()).thenReturn(mockAllHeroes);
 
-        List<Hero> heroes = heroBaseService.findAll();
+        var heroes = heroBaseService.findAll();
         assertNotNull(heroes);
         assertEquals(mockAllHeroes.size(), heroes.size());
 
-        Hero expected = mockAllHeroes.get(0);
-        Hero actual = heroes.get(0);
+        final var expected = mockAllHeroes.get(0);
+        final var actual = heroes.get(0);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getSpeed(), actual.getSpeed());
         assertEquals(expected.getStrength(), actual.getStrength());
@@ -70,16 +70,16 @@ public class HeroBaseServiceTest {
     @DisplayName("Should be get hero by id successfully")
     @Test
     public void shouldBeGetHeroById() {
-        Date date = new Date();
-        Optional<Hero> mockHero = Optional.of(this.getMockHero(date));
+        final var date = new Date();
+        final var mockHero = Optional.of(this.getMockHero(date));
         when(heroRepository.findById(eq(2L))).thenReturn(mockHero);
 
-        Optional<Hero> heroes = heroBaseService.findById(2L);
+        var heroes = heroBaseService.findById(2L);
         assertNotNull(heroes);
         assertTrue(heroes.isPresent());
 
-        Hero expected = this.getMockHero(date);
-        Hero actual = heroes.get();
+        final var expected = this.getMockHero(date);
+        final var actual = heroes.get();
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getSpeed(), actual.getSpeed());
         assertEquals(expected.getStrength(), actual.getStrength());
@@ -106,16 +106,16 @@ public class HeroBaseServiceTest {
     @DisplayName("Should be get hero by substring successfully")
     @Test
     public void shouldBeGetHeroBySubstring() {
-        Date date = new Date();
-        List<Hero> mockHero = List.of(this.getMockHero(date));
+        final var date = new Date();
+        final var mockHero = List.of(this.getMockHero(date));
         when(heroRepository.findByNameContainingIgnoreCase(eq("man"))).thenReturn(mockHero);
 
-        List<Hero> heroes = heroBaseService.findByNameContainingIgnoreCase("man");
+        var heroes = heroBaseService.findByNameContainingIgnoreCase("man");
         assertNotNull(heroes);
         assertEquals(1, heroes.size());
 
-        Hero expected = this.getMockHero(date);
-        Hero actual = heroes.get(0);
+        final var expected = this.getMockHero(date);
+        final var actual = heroes.get(0);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getSpeed(), actual.getSpeed());
         assertEquals(expected.getStrength(), actual.getStrength());
@@ -143,7 +143,7 @@ public class HeroBaseServiceTest {
     @DisplayName("Should be save hero successfully")
     @Test
     public void shouldBeSaveHero() {
-        Hero mockHero = this.getMockAllHeroes().get(0);
+        final var mockHero = this.getMockAllHeroes().get(0);
 
         this.heroBaseService.save(mockHero);
 
@@ -153,7 +153,7 @@ public class HeroBaseServiceTest {
     @DisplayName("Should be save hero with error")
     @Test
     public void shouldBeSaveHeroWithError() {
-        Hero mockHero = this.getMockAllHeroes().get(0);
+        final var mockHero = this.getMockAllHeroes().get(0);
         when(this.heroRepository.save(eq(mockHero))).thenThrow(new RuntimeException());
 
         assertThrows(SaveInstanceException.class, () -> this.heroBaseService.save(new Hero(1,
@@ -193,7 +193,7 @@ public class HeroBaseServiceTest {
     }
 
     private List<Hero> getMockAllHeroes() {
-        List<Hero> mockAllHeroes = new ArrayList<>();
+        final List<Hero> mockAllHeroes = new ArrayList<>();
         mockAllHeroes.add(new Hero(2,
                 "Fireman",
                 100,

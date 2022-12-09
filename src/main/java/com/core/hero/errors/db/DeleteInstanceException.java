@@ -13,7 +13,7 @@ public class DeleteInstanceException extends CustomException {
     }
 
     private static StringBuilder getMessage(@NonNull final String clazzName) {
-        final StringBuilder s = new StringBuilder(DESCRIPTION);
+        final var s = new StringBuilder(DESCRIPTION);
         s.append(". ").append(clazzName);
         return s;
     }

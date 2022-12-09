@@ -37,10 +37,10 @@ public class HeroServiceTest {
     @DisplayName("Should be get all heroes successfully")
     @Test
     public void shouldBeGetAllHeroes() {
-        List<Hero> mockAllHeroes = this.getMockAllHeroes();
+        final var mockAllHeroes = this.getMockAllHeroes();
         when(heroBaseService.findAll()).thenReturn(mockAllHeroes);
 
-        HeroDto heroDto = new HeroDto(1,
+        final var heroDto = new HeroDto(1,
                 "Spiderman",
                 100,
                 101,
@@ -49,13 +49,13 @@ public class HeroServiceTest {
                 mockAllHeroes.get(0).getBirthdate());
         when(modelMapperService.map(mockAllHeroes.get(0), HeroDto.class)).thenReturn(heroDto);
 
-        List<HeroDto> heroesDto = heroService.findAll();
+        final var heroesDto = heroService.findAll();
         assertNotNull(heroesDto);
         assertNotEquals(0, heroesDto.size());
         assertEquals(mockAllHeroes.size(), heroesDto.size());
 
-        Hero expected = mockAllHeroes.get(0);
-        HeroDto actual = heroesDto.get(0);
+        final var expected = mockAllHeroes.get(0);
+        final var actual = heroesDto.get(0);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getSpeed(), actual.getSpeed());
         assertEquals(expected.getStrength(), actual.getStrength());
@@ -68,12 +68,12 @@ public class HeroServiceTest {
     @DisplayName("Should be get hero by id successfully")
     @Test
     public void shouldGetHeroById() {
-        Date mockDate = new Date();
-        Optional<Hero> mockHero = Optional.of(this.getMockHero(mockDate));
+        final var mockDate = new Date();
+        final var mockHero = Optional.of(this.getMockHero(mockDate));
         when(heroBaseService.findById(eq(mockHero.get().getId()))).thenReturn(mockHero);
         when(modelMapperService.map(mockHero.get(), HeroDto.class)).thenReturn(this.getMockHeroDto(mockDate));
 
-        HeroDto heroDto = heroService.findById(mockHero.get().getId());
+        final var heroDto = heroService.findById(mockHero.get().getId());
         assertNotNull(heroDto);
         assertEquals("Spiderman", heroDto.getName());
         assertEquals(100, heroDto.getStrength());
@@ -86,7 +86,7 @@ public class HeroServiceTest {
     @DisplayName("Should be get hero by id with error")
     @Test
     public void shouldGetHeroByIdWithError() {
-        Optional<Hero> mockHero = Optional.empty();
+        final Optional<Hero> mockHero = Optional.empty();
         when(heroBaseService.findById(eq(1L))).thenReturn(mockHero);
 
         assertThrows(NotFoundException.class, () -> heroService.findById(1));
@@ -95,12 +95,12 @@ public class HeroServiceTest {
     @DisplayName("Should be get hero by substring successfully")
     @Test
     public void shouldGetHeroBySubstring() {
-        Date mockDate = new Date();
-        List<Hero> mockHero = List.of(this.getMockHero(mockDate));
+        final var mockDate = new Date();
+        final var mockHero = List.of(this.getMockHero(mockDate));
         when(heroBaseService.findByNameContainingIgnoreCase("der")).thenReturn(mockHero);
         when(modelMapperService.mapAll(mockHero, HeroDto.class)).thenReturn(List.of(this.getMockHeroDto(mockDate)));
 
-        List<HeroDto> heroDto = heroService.findWith("der");
+        final var heroDto = heroService.findWith("der");
         assertNotNull(heroDto);
         assertEquals(1, heroDto.size());
         assertEquals("Spiderman", heroDto.get(0).getName());
@@ -122,7 +122,7 @@ public class HeroServiceTest {
     @DisplayName("Should be update hero successfully")
     @Test
     public void shouldBeUpdateHero() {
-        Hero mockHero = this.getMockAllHeroes().get(0);
+        final var mockHero = this.getMockAllHeroes().get(0);
         doNothing().when(this.heroBaseService).save(isA(Hero.class));
         when(this.heroBaseService.findById(eq(mockHero.getId()))).thenReturn(Optional.of(mockHero));
 
@@ -141,7 +141,7 @@ public class HeroServiceTest {
     @DisplayName("Should be update hero with error")
     @Test
     public void shouldBeUpdateHeroWithError() {
-        Hero mockHero = this.getMockAllHeroes().get(0);
+        final var mockHero = this.getMockAllHeroes().get(0);
         when(this.heroBaseService.findById(eq(mockHero.getId()))).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class, () -> this.heroService.update(new HeroDto(1,
@@ -163,7 +163,7 @@ public class HeroServiceTest {
     }
 
     private List<Hero> getMockAllHeroes() {
-        List<Hero> mockAllHeroes = new ArrayList<>();
+        final List<Hero> mockAllHeroes = new ArrayList<>();
         mockAllHeroes.add(
                 new Hero(1, "Spiderman", 100, 101, 102, Power.MUTATION, new Date())
         );
