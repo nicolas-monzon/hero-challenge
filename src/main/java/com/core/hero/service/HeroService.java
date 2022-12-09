@@ -11,7 +11,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -28,7 +27,7 @@ public class HeroService {
 
     @Cacheable(cacheNames = "heroes")
     public HeroDto findById(final long id) {
-        final Optional<Hero> source = this.heroBaseService.findById(id);
+        final var source = this.heroBaseService.findById(id);
         if (source.isEmpty()) {
             throw new NotFoundException("The hero was not found");
         }
@@ -37,7 +36,7 @@ public class HeroService {
     }
 
     public List<HeroDto> findWith(@NonNull final String sub) {
-        final List<Hero> heroes = this.heroBaseService.findByNameContainingIgnoreCase(sub);
+        final var heroes = this.heroBaseService.findByNameContainingIgnoreCase(sub);
         if (heroes.isEmpty()) {
             throw new NotFoundException("The hero was not found");
         }
@@ -45,7 +44,7 @@ public class HeroService {
     }
 
     public void update(@NonNull final HeroDto heroDto) {
-        final Optional<Hero> source = this.heroBaseService.findById(heroDto.getId());
+        final var source = this.heroBaseService.findById(heroDto.getId());
         if (source.isEmpty()) {
             throw new NotFoundException("The hero was not found");
         }

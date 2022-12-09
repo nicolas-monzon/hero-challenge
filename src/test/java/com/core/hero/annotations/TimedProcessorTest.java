@@ -17,7 +17,7 @@ public class TimedProcessorTest {
     @Test
     @DisplayName("Should always return true")
     public void shouldAlwaysReturnTrue() {
-        final TimedProcessor timedProcessor = new TimedProcessor();
+        final var timedProcessor = new TimedProcessor();
         assertTrue(timedProcessor.process(null, null));
         assertTrue(timedProcessor.process(new HashSet<>(), null));
         assertTrue(timedProcessor.process(null, this.getMockEnvironment()));
@@ -51,5 +51,5 @@ public class TimedProcessorTest {
                 return null;
             }
         };
-    };
+    }
 }

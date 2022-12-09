@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -46,9 +47,9 @@ public class HeroControllerIT {
     @Test
     @DisplayName("Test - " + Routes.HERO_BASE + Routes.HERO_GET_ALL + " - 200")
     public void shouldGetAllHeroesSuccessfully() {
-        final String URI = Routes.HERO_BASE + Routes.HERO_GET_ALL;
+        final var URI = Routes.HERO_BASE + Routes.HERO_GET_ALL;
 
-        final String result = expectGetPerform(URI, HttpStatus.OK.value());
+        final var result = expectGetPerform(URI, HttpStatus.OK.value());
         assertNotNull(result);
         assertTrue(result.contains("Spiderman"));
         assertTrue(result.contains("2001-08-10"));
@@ -61,9 +62,9 @@ public class HeroControllerIT {
     @Test
     @DisplayName("Test - " + Routes.HERO_BASE + Routes.HERO_GET + " - 200")
     public void shouldGetHeroSuccessfully() throws ParseException {
-        final String URI = Routes.HERO_BASE + Routes.HERO_GET;
+        final var URI = Routes.HERO_BASE + Routes.HERO_GET;
 
-        final String result = expectGetPerform(URI + "?id=1", HttpStatus.OK.value());
+        final var result = expectGetPerform(URI + "?id=1", HttpStatus.OK.value());
         assertNotNull(result);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Date birthdate = format.parse("10/08/2001");
@@ -80,9 +81,9 @@ public class HeroControllerIT {
     @Test
     @DisplayName("Test - " + Routes.HERO_BASE + Routes.HERO_GET + " - 400")
     public void shouldGetHeroBadRequest() {
-        final String URI = Routes.HERO_BASE + Routes.HERO_GET;
+        final var URI = Routes.HERO_BASE + Routes.HERO_GET;
 
-        final String result = expectGetPerform(URI + "?id=-1", HttpStatus.BAD_REQUEST.value());
+        final var result = expectGetPerform(URI + "?id=-1", HttpStatus.BAD_REQUEST.value());
         assertNotNull(result);
         assertTrue(result.contains("ConstraintViolation"));
         assertTrue(result.contains("error"));
@@ -91,9 +92,9 @@ public class HeroControllerIT {
     @Test
     @DisplayName("Test - " + Routes.HERO_BASE + Routes.HERO_GET + " - 404")
     public void shouldGetHeroNotFound() {
-        final String URI = Routes.HERO_BASE + Routes.HERO_GET;
+        final var URI = Routes.HERO_BASE + Routes.HERO_GET;
 
-        final String result = expectGetPerform(URI + "?id=100", HttpStatus.NOT_FOUND.value());
+        final var result = expectGetPerform(URI + "?id=100", HttpStatus.NOT_FOUND.value());
         assertNotNull(result);
         assertTrue(result.contains("NotFound"));
         assertTrue(result.contains("error"));
@@ -102,9 +103,9 @@ public class HeroControllerIT {
     @Test
     @DisplayName("Test - " + Routes.HERO_BASE + Routes.HERO_UPDATE + " - 200")
     public void shouldUpdateHero() throws ParseException {
-        final String URI = Routes.HERO_BASE + Routes.HERO_UPDATE;
+        final var URI = Routes.HERO_BASE + Routes.HERO_UPDATE;
 
-        final String result = expectPutPerform(URI, HttpStatus.OK.value(), new HeroEditRequest(3L,
+        final var result = expectPutPerform(URI, HttpStatus.OK.value(), new HeroEditRequest(3L,
                 "Triclope",
                 1250,
                 800,
@@ -118,10 +119,10 @@ public class HeroControllerIT {
         assertTrue(result.toUpperCase(Locale.ROOT).contains(Power.TRANSFORMATION.name().toUpperCase(Locale.ROOT)));
 
         // revert operation
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        final var format = new SimpleDateFormat("dd/MM/yyyy");
         Date birthdate = format.parse("12/08/2001");
         expectPutPerform(URI, HttpStatus.OK.value(), new HeroEditRequest(3L,
-                "Ciclope",
+                "Cíclope",
                 1250,
                 800,
                 900,
@@ -134,13 +135,13 @@ public class HeroControllerIT {
                                     final int status) {
         MvcResult mvcResult;
         try {
-            final ResultMatcher matcher = getMatcher(status);
-            if (matcher == null) {
+            final var matcher = getMatcher(status);
+            if (matcher.isEmpty()) {
                 fail();
             }
             mvcResult = mvc.perform(get(URI)
                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(matcher)
+                    .andExpect(matcher.get())
                     .andReturn();
         } catch (Exception exception) {
             return null;
@@ -159,20 +160,20 @@ public class HeroControllerIT {
                                     final Object request) {
         MvcResult mvcResult;
         try {
-            final ResultMatcher matcher = getMatcher(status);
-            if (matcher == null) {
+            final var matcher = getMatcher(status);
+            if (matcher.isEmpty()) {
                 fail();
             }
             mvcResult = (request == null) ?
                     mvc.perform(put(URI)
                                     .contentType(MediaType.APPLICATION_JSON))
-                            .andExpect(matcher)
+                            .andExpect(matcher.get())
                             .andReturn()
                     :
                     mvc.perform(put(URI)
                                     .content(this.toJsonString(request))
                                     .contentType(MediaType.APPLICATION_JSON))
-                            .andExpect(matcher)
+                            .andExpect(matcher.get())
                             .andReturn();
         } catch (Exception exception) {
             return null;
@@ -186,21 +187,21 @@ public class HeroControllerIT {
         return result;
     }
 
-    private ResultMatcher getMatcher(final int status) {
+    private Optional<ResultMatcher> getMatcher(final int status) {
         if (status == HttpStatus.OK.value()) {
-            return status().isOk();
+            return Optional.of(status().isOk());
         }
         if (status == HttpStatus.BAD_REQUEST.value()) {
-            return status().isBadRequest();
+            return Optional.of(status().isBadRequest());
         }
         if (status == HttpStatus.NOT_FOUND.value()) {
-            return status().isNotFound();
+            return Optional.of(status().isNotFound());
         }
-        return null;
+        return Optional.empty();
     }
 
     private String toJsonString(final Object object) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        final var objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {

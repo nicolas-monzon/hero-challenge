@@ -45,7 +45,7 @@ public class HeroEditRequestTest {
     @Test
     @DisplayName("Should validate if a value is invalid.")
     public void shouldCheckIfTheAttributeIsInvalid() {
-        Set<ConstraintViolation<HeroEditRequest>> violations = validator.validate(this.heroEditRequest);
+        var violations = validator.validate(this.heroEditRequest);
         assertIsEmpty(violations);
 
         this.heroEditRequest.setId(0L);

@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "app-name",
+      "type": "java.lang.String",
+      "description": "The name of the project."
+    },
+    {
+      "name": "app-version",
+      "type": "java.lang.String",
+      "description": "The version of the project."
+    }
+  ]
+}

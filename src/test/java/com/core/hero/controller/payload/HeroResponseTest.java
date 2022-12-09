@@ -14,7 +14,7 @@ public class HeroResponseTest {
     @DisplayName("Should create instance of HeroResponse")
     public void shouldCreateInstanceOfHeroResponse() {
         assertDoesNotThrow(() -> new HeroResponse());
-        HeroResponse response = new HeroResponse(1,
+        final var response = new HeroResponse(1,
                 "Java Developer",
                 15000,
                 100,

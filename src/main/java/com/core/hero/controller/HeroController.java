@@ -47,7 +47,8 @@ public class HeroController {
                             schema = @Schema(implementation = HeroResponse.class))})})
     @GetMapping(Routes.HERO_GET_ALL)
     public ResponseEntity<List<HeroResponse>> all() {
-        List<HeroResponse> heroes = this.modelMapperService.mapAll(this.heroService.findAll(), HeroResponse.class);
+        final List<HeroResponse> heroes =
+                this.modelMapperService.mapAll(this.heroService.findAll(), HeroResponse.class);
         return ResponseEntity.ok(heroes);
     }
 
@@ -65,14 +66,14 @@ public class HeroController {
             @RequestParam @Valid Optional<String> contains
     ) {
         if (id.isPresent()) {
-            final HeroDto heroDto = this.heroService.findById(id.get());
+            final var heroDto = this.heroService.findById(id.get());
             if (contains.isPresent() && !heroDto.getName().toLowerCase().contains(contains.get().toLowerCase())) {
                 throw new NotFoundException("The hero was not found");
             }
             return ResponseEntity.ok(this.modelMapperService.map(heroDto, HeroResponse.class));
         }
 
-        List<HeroResponse> heroes = contains.isPresent() ?
+        final var heroes = contains.isPresent() ?
                 this.modelMapperService.mapAll(this.heroService.findWith(contains.get()), HeroResponse.class)
                 :
                 this.modelMapperService.mapAll(this.heroService.findAll(), HeroResponse.class);
@@ -89,7 +90,7 @@ public class HeroController {
             @ApiResponse(responseCode = "404", description = "Hero not found", content = @Content)})
     @PutMapping(Routes.HERO_UPDATE)
     public ResponseEntity<HeroResponse> update(@Valid @RequestBody HeroEditRequest request) {
-        final HeroDto heroDto = new HeroDto(request.getId(),
+        final var heroDto = new HeroDto(request.getId(),
                 request.getName(),
                 request.getStrength(),
                 request.getSpeed(),

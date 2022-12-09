@@ -29,6 +29,9 @@ Java JDK 11.
 4. Para levantar la imagen ```docker run --name java-app -p 8081:8080 hero-app:latest```.
 5. Para verificar que esté corrientdo ```docker ps -a```,
 
+Si el proyecto no compila, por ejemplo, por modificar el código, borrar manualmente el archivo
+```javax.annotation.processing.Processor```.
+
 ## Documentación
 
 El proyecto cuenta con algunos métodos descriptos por JavaDoc, pero también posee Swagger. Para consultarlo, 
@@ -40,6 +43,7 @@ vaya a ```http://localhost:2001/swagger-ui/index.html```.
 - Tampoco fue aplicado TDD en la creación de los tests.
 - Los tests de repositorios serían una buena mejora.
 - Analizar la opción de ```ObjectMapper``` en lugar de ```ModelMapper```.
-- El coverage puede aumentar, haciendo tests genéricos de la capa de Facade.
+- Se pueden agregar tests para los casos de los @NonNull de lombok
+- Se pueden agregar tests genéricos de la capa de Facade.
 - Es posible que el método de borrado de heroes pueda borrar de a varios.
-- El cache configurado es el tipo más básico de caché, y algunos métodos también podrían ser cacheados.
+- El caché configurado es el tipo más básico de caché, y podría usarse alguna versión mejorada

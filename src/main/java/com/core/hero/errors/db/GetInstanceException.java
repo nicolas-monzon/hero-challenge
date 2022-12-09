@@ -13,7 +13,7 @@ public class GetInstanceException extends CustomException {
     }
 
     private static StringBuilder getMessage(@NonNull final String detail) {
-        final StringBuilder s = new StringBuilder(DESCRIPTION);
+        final var s = new StringBuilder(DESCRIPTION);
         s.append(". ").append(detail);
         return s;
     }

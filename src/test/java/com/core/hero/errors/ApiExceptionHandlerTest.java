@@ -32,19 +32,19 @@ public class ApiExceptionHandlerTest {
     @Test
     @DisplayName("Should check database errors")
     public void shouldCheckDbErrors() {
-        DeleteInstanceException deleteInstanceException = new DeleteInstanceException(clazz);
-        ErrorResponse errorResponse = this.apiExceptionHandler.dbError(deleteInstanceException);
+        final var deleteInstanceException = new DeleteInstanceException(clazz);
+        var errorResponse = this.apiExceptionHandler.dbError(deleteInstanceException);
         assertEquals("DeleteInstanceException", errorResponse.getError());
         assertEquals("DeleteInstance", errorResponse.getCode());
         assertTrue(errorResponse.getDescription().contains(clazz));
 
-        GetInstanceException getInstanceException = new GetInstanceException(clazz);
+        final var getInstanceException = new GetInstanceException(clazz);
         errorResponse = this.apiExceptionHandler.dbError(getInstanceException);
         assertEquals("GetInstanceException", errorResponse.getError());
         assertEquals("GetInstance", errorResponse.getCode());
         assertTrue(errorResponse.getDescription().contains(clazz));
 
-        SaveInstanceException saveInstanceException = new SaveInstanceException(clazz);
+        final var saveInstanceException = new SaveInstanceException(clazz);
         errorResponse = this.apiExceptionHandler.dbError(saveInstanceException);
         assertEquals("SaveInstanceException", errorResponse.getError());
         assertEquals("SaveInstance", errorResponse.getCode());
@@ -54,8 +54,8 @@ public class ApiExceptionHandlerTest {
     @Test
     @DisplayName("Should check not found status")
     public void shouldCheckNotFoundErrors() {
-        NotFoundException notFoundException = new NotFoundException(clazz);
-        ErrorResponse errorResponse = this.apiExceptionHandler.notFoundRequest(notFoundException);
+        final var notFoundException = new NotFoundException(clazz);
+        final var errorResponse = this.apiExceptionHandler.notFoundRequest(notFoundException);
         assertEquals("NotFoundException", errorResponse.getError());
         assertEquals("NotFound", errorResponse.getCode());
         assertFalse(errorResponse.getDescription().isEmpty());
@@ -64,8 +64,8 @@ public class ApiExceptionHandlerTest {
     @Test
     @DisplayName("Should check if power not found")
     public void shouldCheckIfPowerNotFound() {
-        PowerNotFoundException powerNotFoundException = new PowerNotFoundException();
-        ErrorResponse errorResponse = this.apiExceptionHandler.powerNotFoundRequest(powerNotFoundException);
+        final var powerNotFoundException = new PowerNotFoundException();
+        final var errorResponse = this.apiExceptionHandler.powerNotFoundRequest(powerNotFoundException);
         assertEquals("PowerNotFoundException", errorResponse.getError());
         assertEquals("PowerNotFound", errorResponse.getCode());
         assertEquals("Power not found", errorResponse.getDescription());
@@ -74,13 +74,13 @@ public class ApiExceptionHandlerTest {
     @Test
     @DisplayName("Should check bad request status")
     public void shouldCheckBadRequestError() throws NoSuchMethodException {
-        ConstraintViolationException constraintViolationException = new ConstraintViolationException(new HashSet<>());
-        ErrorResponse errorResponse = this.apiExceptionHandler.badRequest(constraintViolationException);
+        final var constraintViolationException = new ConstraintViolationException(new HashSet<>());
+        var errorResponse = this.apiExceptionHandler.badRequest(constraintViolationException);
         assertEquals("ConstraintViolationException", errorResponse.getError());
         assertNotNull(errorResponse.getCode());
         assertNotNull(errorResponse.getDescription());
 
-        MethodArgumentTypeMismatchException methodArgumentTypeMismatchException =
+        final var methodArgumentTypeMismatchException =
                 new MethodArgumentTypeMismatchException("",
                         Empty.class,
                         "name",
@@ -95,8 +95,8 @@ public class ApiExceptionHandlerTest {
     @Test
     @DisplayName("Should check other exception")
     public void shouldCheckOtherException() {
-        NullPointerException nullPointerException = new NullPointerException();
-        ErrorResponse errorResponse = this.apiExceptionHandler.exception(nullPointerException);
+        final var nullPointerException = new NullPointerException();
+        final var errorResponse = this.apiExceptionHandler.exception(nullPointerException);
         assertEquals("NullPointerException", errorResponse.getError());
         assertNotNull(errorResponse.getCode());
         assertNull(errorResponse.getDescription());

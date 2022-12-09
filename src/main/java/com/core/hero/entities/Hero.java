@@ -56,10 +56,13 @@ public class Hero {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Hero hero = (Hero) o;
-        return id == hero.id;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || this.getClass() != o.getClass() || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
+        return id == ((Hero) o).id;
     }
 
     @Override
